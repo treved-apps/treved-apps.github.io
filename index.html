@@ -79,8 +79,26 @@
     </div>
 
     <footer>
-        <a href="personal.html">Koda klica: 66dfh3ndq</a>
+        <a href="personal.html" id="koda-povezava">Koda klica: </a>
     </footer>
+
+    <script>
+        // Ta funkcija se izvede avtomatsko, ko se spletna stran v celoti naloži
+        window.onload = function() {
+            const znaki = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let nakljucnaKoda = '';
+            const dolzina = 14;
+
+            // Zanka, ki 14-krat izbere naključen znak
+            for (let i = 0; i < dolzina; i++) {
+                const nakljucniIndeks = Math.floor(Math.random() * znaki.length);
+                nakljucnaKoda += znaki.charAt(nakljucniIndeks);
+            }
+
+            // Poiščemo povezavo in ji nastavimo končni tekst (fiksni del + generirana koda)
+            document.getElementById('koda-povezava').innerText = "Koda klica: " + nakljucnaKoda;
+        };
+    </script>
 
 </body>
 </html>
