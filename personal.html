@@ -133,24 +133,32 @@
     </footer>
 
     <script>
-        const targetLength = 17;
-        // Base64 kodiran "JurijGitHubPages"
-        const hashedKey = "SnVyaWpHaXRIdWJQYWdlcw=="; 
+    const targetLength = 17;
+    // Skrivna vsota znakov za ""
+    const targetHash = 1552; 
 
-        document.getElementById('secretInput').addEventListener('input', function(e) {
-            let currentInput = e.target.value;
+    // Preprosta funkcija, ki pretvori tekst v številčno kodo
+    function getHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash += str.charCodeAt(i);
+        }
+        return hash;
+    }
 
-            // Preveri takoj, ko doseže 17 znakov
-            if (currentInput.length === targetLength) {
-                // Pretvorba vnosa v Base64 in primerjava
-                if (btoa(currentInput) === hashedKey) {
-                    document.getElementById('secretImg').style.display = 'block';
-                }
-                
-                // V vsakem primeru takoj izprazni polje
-                e.target.value = '';
+    document.getElementById('secretInput').addEventListener('input', function(e) {
+        let currentInput = e.target.value;
+
+        if (currentInput.length === targetLength) {
+            // Preverimo, če se matematična vsota ujema
+            if (getHash(currentInput) === targetHash) {
+                document.getElementById('secretImg').style.display = 'block';
             }
-        });
+            
+            // Takoj izpraznimo polje
+            e.target.value = '';
+        }
+    });
     </script>
 
 </body>
