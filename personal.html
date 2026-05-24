@@ -22,6 +22,9 @@
         .container {
             max-width: 600px;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* Naslov na vrhu */
@@ -38,6 +41,8 @@
             background-color: #1e1e1e;
             border-radius: 8px;
             border: 1px solid #333;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         a {
@@ -51,6 +56,15 @@
         a:hover {
             color: #20c997;
             text-decoration: underline;
+        }
+
+        /* Skrita slika, ki se pojavi pod povezavo */
+        .secret-image {
+            display: none;
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #333;
         }
 
         /* Gumb za nazaj */
@@ -67,6 +81,31 @@
         .back-link a:hover {
             color: #ffffff;
         }
+
+        /* Skrivno vnosno polje v nogi */
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .secret-input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #222;
+            color: #333;
+            text-align: center;
+            font-size: 0.8rem;
+            outline: none;
+            width: 120px;
+            transition: border-color 0.3s;
+        }
+
+        .secret-input:focus {
+            border-bottom-color: #444;
+            color: #565656;
+        }
     </style>
 </head>
 <body>
@@ -79,11 +118,40 @@
                 Pomembne osebnosti Poljske - Predstavitev
             </a>
         </div>
+
+        <!-- Slika, ki se prvotno skrije -->
+        <img id="secretImg" class="secret-image" src="https://pub-82571d86195d4e62a1c7bb0d4e254171.r2.dev/osebno/Screenshot_2026-05-24-07-35-17-54_f7aa348215f5d566f9e4ca860f474209.jpg" alt="Skrivna slika">
         
         <div class="back-link">
             <a href="index.html">← Nazaj na TREVED</a>
         </div>
     </div>
+
+    <!-- Noga z minimalističnim vnosnim poljem -->
+    <footer>
+        <input type="password" id="secretInput" class="secret-input" maxlength="17" placeholder="...">
+    </footer>
+
+    <script>
+        const targetLength = 17;
+        // Base64 kodiran "JurijGitHubPages"
+        const hashedKey = "SnVyaWpHaXRIdWJQYWdlcw=="; 
+
+        document.getElementById('secretInput').addEventListener('input', function(e) {
+            let currentInput = e.target.value;
+
+            // Preveri takoj, ko doseže 17 znakov
+            if (currentInput.length === targetLength) {
+                // Pretvorba vnosa v Base64 in primerjava
+                if (btoa(currentInput) === hashedKey) {
+                    document.getElementById('secretImg').style.display = 'block';
+                }
+                
+                // V vsakem primeru takoj izprazni polje
+                e.target.value = '';
+            }
+        });
+    </script>
 
 </body>
 </html>
